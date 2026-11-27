@@ -21,13 +21,13 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install websockets pynput vgamepad sounddevice numpy pillow pyinstaller
+          pip install websockets pynput sounddevice numpy pillow pyinstaller
 
       - name: Generate Icon and Build EXE
         working-directory: pc_server
         run: |
           python make_icon.py
-          pyinstaller --onefile --windowed --icon=app_icon.ico --name="PCRemoteServer" --collect-all vgamepad --collect-all sounddevice --noconfirm main.py
+          pyinstaller --onefile --windowed --icon=app_icon.ico --name="PCRemoteServer" --collect-all sounddevice --noconfirm main.py
 
       - name: Upload Windows EXE
         uses: actions/upload-artifact@v4

@@ -1,62 +1,10 @@
-name: Build APK and EXE
-
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
-
-jobs:
-  build-android:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
-        with:
-          gradle-version: '8.4'
-
-      - name: Build Debug APK
-        working-directory: android-app
-        run: gradle assembleDebug
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: PhonePCControl-APK
-          path: android-app/app/build/outputs/apk/debug/app-debug.apk
-
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies and create icon
-        working-directory: pc-server
+      - name: Install Python dependencies
         run: |
-          pip install -r requirements.txt
+          python -m pip install --upgrade pip
+          pip install -r pc_server/requirements.txt
+
+      - name: Generate Icon and Build EXE
+        working-directory: pc_server
+        run: |
           python make_icon.py
-
-      - name: Build Windows EXE
-        working-directory: pc-server
-        run: |
-          pyinstaller --noconfirm --onefile --windowed --icon=app_icon.ico --name=PhonePCControl main.py
-
-      - name: Upload EXE
-        uses: actions/upload-artifact@v4
-        with:
-          name: PhonePCControl-EXE
-          path: pc-server/dist/PhonePCControl.exe
+          pyinstaller --onefile --windowed --icon=app_icon.ico --name="PCRemoteServer" --collect-all vgamepad --collect-all sounddevice --noconfirm main.py

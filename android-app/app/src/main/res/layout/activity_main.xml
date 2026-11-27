@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <!-- Top Bar: Mouse Icon + App Title + Settings Gear -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_app_mouse" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:text="Phone to PC Control"
+            android:textColor="@color/text_white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvConnectionStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="Not Connected"
+            android:textColor="@color/accent_purple"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/btnSettings"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_round_card"
+            android:padding="8dp"
+            android:src="@android:drawable/ic_menu_preferences"
+            android:tint="@color/text_white" />
+    </LinearLayout>
+
+    <!-- Fixed 4 Option Tabs: Keyboard, Mouse, Mic, Joystick -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <Button
+            android:id="@+id/tabKeyboard"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/accent_blue"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            android:text="Keyboard"
+            android:textAllCaps="false"
+            android:textColor="@color/text_white"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/tabMouse"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/bg_card"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            android:text="Mouse"
+            android:textAllCaps="false"
+            android:textColor="@color/text_white"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/tabMic"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/bg_card"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            android:text="Mic"
+            android:textAllCaps="false"
+            android:textColor="@color/text_white"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/tabJoystick"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/bg_card"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            android:text="Joystick"
+            android:textAllCaps="false"
+            android:textColor="@color/text_white"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- Main Content Container (Only one screen open at a time) -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- 1. KEYBOARD SCREEN -->
+        <LinearLayout
+            android:id="@+id/screenKeyboard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <!-- Single Row of 4 Modifiers: Shift, Ctrl, Fn, Windows -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <Button
+                    android:id="@+id/kbModShift"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_surface"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    android:text="Shift"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_white"
+                    android:textSize="11sp" />
+
+                <Button
+                    android:id="@+id/kbModCtrl"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_surface"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    android:text="Ctrl"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_white"
+                    android:textSize="11sp" />
+
+                <Button
+                    android:id="@+id/kbModFn"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_surface"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    android:text="Fn"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_white"
+                    android:textSize="11sp" />
+
+                <Button
+                    android:id="@+id/kbModWin"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_surface"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    android:text="Windows"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_white"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- Special & Arrow Keys Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                android:weightSum="6">
+
+                <Button
+                    android:id="@+id/keyEsc"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_card"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    android:text="Esc"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_white"
+                    android:textSize="11sp" />
+
+                <Button
+                    android:id="@+id/keyTab"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_card"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    android:text="Tab"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_white"
+                    android:textSize="11sp" />
+
+                <Button
+                    android:id="@+id/keyUp"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_card"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    android:text="▲"
+                    android:textColor="@color/text_white"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/keyDown"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_card"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    android:text="▼"
+                    android:textColor="@color/text_white"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/keyLeft"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_card"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    android:text="◀"
+                    android:textColor="@color/text_white"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/keyRight"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_card"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    android:text="▶"
+                    android:textColor="@color/text_white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- On-Screen QWERTY Keyboard Container -->
+            <LinearLayout
+                android:id="@+id/qwertyContainer"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_round_card"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="6dp" />
+        </LinearLayout>
+
+        <!-- 2. MOUSE SCREEN -->
+        <LinearLayout
+            android:id="@+id/screenMouse"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!-- Modifiers Row on Mouse Screen -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <Button
+                    android:id="@+id/msModShift"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_surface"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    android:text="Shift"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_white"
+                    android:textSize="11sp" />
+
+                <Button
+                    android:id="@+id/msModCtrl"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_surface"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    android:text="Ctrl"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_white"
+                    android:textSize="11sp" />
+
+                <Button
+                    android:id="@+id/msModFn"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_surface"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    android:text="Fn"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_white"
+                    android:textSize="11sp" />
+
+                <Button
+                    android:id="@+id/msModWin"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_surface"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    android:text="Windows"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_white"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- Large Touchpad -->
+            <FrameLayout
+                android:id="@+id/touchpadView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_round_card">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Slide to Move  •  Tap to Click  •  2-Finger Scroll"
+                    android:textColor="@color/text_muted"
+                    android:textSize="12sp" />
+            </FrameLayout>
+
+            <!-- Bottom Left Click (Toggle Hold) & Right Click -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btnLeftClick"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_card"
+                    android:text="Left Click (Hold)"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_white"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btnRightClick"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_card"
+                    android:text="Right Click"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_white"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 3. MIC SCREEN -->
+        <LinearLayout
+            android:id="@+id/screenMic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_round_card"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/btnMicToggle"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:backgroundTint="@color/bg_surface"
+                android:text="MIC OFF"
+                android:textColor="@color/text_white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvMicHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:gravity="center"
+                android:text="Tap to turn ON phone microphone for PC"
+                android:textColor="@color/text_muted"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- 4. JOYSTICK SCREEN -->
+        <LinearLayout
+            android:id="@+id/screenJoystick"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_round_card"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:visibility="gone">
+
+            <!-- Shoulder & Menu Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <Button
+                    android:id="@+id/gpLB"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_surface"
+                    android:text="LB"
+                    android:textColor="@color/text_white" />
+
+                <Button
+                    android:id="@+id/gpBACK"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_surface"
+                    android:text="BACK"
+                    android:textColor="@color/text_white"
+                    android:textSize="11sp" />
+
+                <Button
+                    android:id="@+id/gpSTART"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_surface"
+                    android:text="START"
+                    android:textColor="@color/text_white"
+                    android:textSize="11sp" />
+
+                <Button
+                    android:id="@+id/gpRB"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bg_surface"
+                    android:text="RB"
+                    android:textColor="@color/text_white" />
+            </LinearLayout>
+
+            <!-- D-Pad & Action Buttons (Y, X, B, A) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <!-- D-Pad Grid -->
+                <GridLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:columnCount="3"
+                    android:rowCount="3">
+
+                    <Space android:layout_width="44dp" android:layout_height="44dp" />
+                    <Button android:id="@+id/gpDpadUp" android:layout_width="44dp" android:layout_height="44dp" android:backgroundTint="@color/bg_surface" android:padding="0dp" android:text="▲" android:textColor="@color/text_white" />
+                    <Space android:layout_width="44dp" android:layout_height="44dp" />
+
+                    <Button android:id="@+id/gpDpadLeft" android:layout_width="44dp" android:layout_height="44dp" android:backgroundTint="@color/bg_surface" android:padding="0dp" android:text="◀" android:textColor="@color/text_white" />
+                    <Space android:layout_width="44dp" android:layout_height="44dp" />
+                    <Button android:id="@+id/gpDpadRight" android:layout_width="44dp" android:layout_height="44dp" android:backgroundTint="@color/bg_surface" android:padding="0dp" android:text="▶" android:textColor="@color/text_white" />
+
+                    <Space android:layout_width="44dp" android:layout_height="44dp" />
+                    <Button android:id="@+id/gpDpadDown" android:layout_width="44dp" android:layout_height="44dp" android:backgroundTint="@color/bg_surface" android:padding="0dp" android:text="▼" android:textColor="@color/text_white" />
+                    <Space android:layout_width="44dp" android:layout_height="44dp" />
+                </GridLayout>
+
+                <!-- ABXY Buttons -->
+                <GridLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:columnCount="3"
+                    android:rowCount="3">
+
+                    <Space android:layout_width="44dp" android:layout_height="44dp" />
+                    <Button android:id="@+id/gpY" android:layout_width="44dp" android:layout_height="44dp" android:backgroundTint="@color/accent_purple" android:padding="0dp" android:text="Y" android:textColor="@color/text_white" />
+                    <Space android:layout_width="44dp" android:layout_height="44dp" />
+
+                    <Button android:id="@+id/gpX" android:layout_width="44dp" android:layout_height="44dp" android:backgroundTint="@color/accent_blue" android:padding="0dp" android:text="X" android:textColor="@color/text_white" />
+                    <Space android:layout_width="44dp" android:layout_height="44dp" />
+                    <Button android:id="@+id/gpB" android:layout_width="44dp" android:layout_height="44dp" android:backgroundTint="@color/accent_purple" android:padding="0dp" android:text="B" android:textColor="@color/text_white" />
+
+                    <Space android:layout_width="44dp" android:layout_height="44dp" />
+                    <Button android:id="@+id/gpA" android:layout_width="44dp" android:layout_height="44dp" android:backgroundTint="@color/accent_blue" android:padding="0dp" android:text="A" android:textColor="@color/text_white" />
+                    <Space android:layout_width="44dp" android:layout_height="44dp" />
+                </GridLayout>
+            </LinearLayout>
+
+            <!-- Dual Thumbstick Touch Pads -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <FrameLayout
+                    android:id="@+id/leftStickPad"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:background="@color/bg_dark">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Left Stick"
+                        android:textColor="@color/text_muted"
+                        android:textSize="12sp" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/rightStickPad"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:background="@color/bg_dark">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Right Stick"
+                        android:textColor="@color/text_muted"
+                        android:textSize="12sp" />
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

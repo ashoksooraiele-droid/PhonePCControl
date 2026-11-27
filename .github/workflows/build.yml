@@ -24,13 +24,21 @@ jobs:
           pip install websockets pynput sounddevice numpy pillow pyinstaller
 
       - name: Generate Icon and Build EXE
-        working-directory: pc_server
         run: |
-          python make_icon.py
-          pyinstaller --onefile --windowed --icon=app_icon.ico --name="PCRemoteServer" --collect-all sounddevice --noconfirm main.py
+          $mainFile = Get-ChildItem -Recurse -Filter "main.py" | Select-Object -First 1
+          if (-not $mainFile) { throw "main.py file not found!" }
+          Set-Location $mainFile.DirectoryName
+          if (Test-Path "make_icon.py") { python make_icon.py }
+          if (Test-Path "app_icon.ico") {
+            pyinstaller --onefile --windowed --icon=app_icon.ico --name="PCRemoteServer" --collect-all sounddevice --noconfirm main.py
+          } else {
+            pyinstaller --onefile --windowed --name="PCRemoteServer" --collect-all sounddevice --noconfirm main.py
+          }
+          New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\output"
+          Copy-Item "dist\PCRemoteServer.exe" "$env:GITHUB_WORKSPACE\output\PCRemoteServer.exe"
 
       - name: Upload Windows EXE
         uses: actions/upload-artifact@v4
         with:
           name: PCRemoteServer-Windows
-          path: pc_server/dist/PCRemoteServer.exe
+          path: output/PCRemoteServer.exe
